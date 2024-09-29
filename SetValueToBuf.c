@@ -1,6 +1,3 @@
-/******************************************************************************
-
-                            Online C Compiler.
                 Code, Compile, Run and Debug C program online.
 Write your code in this editor and press "Run" button to compile and execute it.
 
@@ -35,6 +32,11 @@ void setValueToArray(uint8* BufPtr, uint8* ValuePtr, uint16 startBit, uint16 bit
     for (loopIdx= 0; loopIdx < 50; loopIdx++) {
         tempBuf[loopIdx] = 0;
     }
+    tempValue = bitLength / 8;
+    if ((bitLength % 8) == 0) {
+        tempValue = tempValue - 1;
+    }
+    ValuePtr[tempValue] = ValuePtr[tempValue] << (8-(bitLength % 8));
     byteLength = (startOffsetBit + bitLength) / 8;
     if (((startOffsetBit + bitLength) % 8) != 0) {
         byteLength++;
@@ -82,9 +84,9 @@ void setValueToArray(uint8* BufPtr, uint8* ValuePtr, uint16 startBit, uint16 bit
 int main()
 {
     uint8 data[] = {0b10100110, 0b10110011,0b00100011};
-    uint8 value[] =   {0b11010110, 0b11000101};
+    uint8 value[] =   {0b11010101, 0b1100010};
     
-    setValueToArray(data, value, 3, 16);
+    setValueToArray(data, value, 3, 15);
     for (uint8 i = 0; i < 3; i++) {
         printf("%u\n", data[i]);
     }
